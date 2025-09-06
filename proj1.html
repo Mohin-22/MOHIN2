@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Ordering Website</title>
+  <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">🍴 FoodiesHub</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#cart">Cart</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <h1>Delicious Food, Delivered To You</h1>
+    <p>Order your favorite meals anytime, anywhere 🍔🍕🍝</p>
+    <a href="#menu" class="btn">Order Now</a>
+  </section>
+
+  <!-- Menu Section -->
+  <section class="menu" id="menu">
+    <h2>Our Menu</h2>
+    <div class="container" id="menuItems">
+      <!-- Food items will be added here dynamically -->
+    </div>
+  </section>
+
+  <!-- Cart Section -->
+  <section class="cart" id="cart">
+    <h2>🛒 Your Cart</h2>
+    <ul id="cartList"></ul>
+    <h3>Total: ₹<span id="total">0</span></h3>
+    <button onclick="placeOrder()">Place Order</button>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: support@foodieshub.com</p>
+    <p>Phone: +91 98765 43210</p>
+  </section>
+
+  <footer>
+    <p>© 2025 FoodiesHub | All rights reserved</p>
+  </footer>
+
+  <script>
+  const menuItems = [
+  { name: "Pizza", price: 250, img: "https://media.istockphoto.com/id/1048400936/photo/whole-italian-pizza-on-wooden-table-with-ingredients.jpg?s=612x612&w=0&k=20&c=_1GwSXSjFeC06w3MziyeqRk5Lx-FMXUZzCpxEOoHyzQ=" },
+  { name: "Burger", price: 150, img: "https://thumbs.dreamstime.com/b/tasty-burger-french-fries-fire-close-up-home-made-flames-137249900.jpg" },
+  { name: "Pasta", price: 200, img: "https://source.unsplash.com/300x200/?pasta" },
+  { name: "Ice Cream", price: 100, img: "https://source.unsplash.com/300x200/?icecream" },
+  { name: "Sandwich", price: 120, img: "https://source.unsplash.com/300x200/?sandwich" },
+  { name: "French Fries", price: 90, img: "https://source.unsplash.com/300x200/?fries" },
+  { name: "Biryani", price: 300, img: "https://source.unsplash.com/300x200/?biryani" },
+  { name: "Salad", price: 130, img: "https://source.unsplash.com/300x200/?salad" },
+];
+
+// Render menu
+const menuContainer = document.getElementById("menuItems");
+menuItems.forEach(item => {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `
+    <img src="${item.img}" alt="${item.name}">
+    <h3>${item.name}</h3>
+    <p>₹${item.price}</p>
+    <button onclick="addToCart('${item.name}', ${item.price})">Add to Cart</button>
+  `;
+  menuContainer.appendChild(card);
+});
+
+// Cart
+let cart = [];
+let total = 0;
+
+function addToCart(item, price) {
+  cart.push({ item, price });
+  total += price;
+  updateCart();
+}
+
+function updateCart() {
+  const cartList = document.getElementById("cartList");
+  cartList.innerHTML = "";
+  cart.forEach((c) => {
+    let li = document.createElement("li");
+    li.textContent = `${c.item} - ₹${c.price}`;
+    cartList.appendChild(li);
+  });
+  document.getElementById("total").textContent = total;
+}
+
+function placeOrder() {
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+  } else {
+    alert("🎉 Thank you! Your order has been placed.");
+    cart = [];
+    total = 0;
+    updateCart();
+  }
+}
+  </script>
+</body>
+</html>
